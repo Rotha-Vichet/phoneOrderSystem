@@ -1,0 +1,44 @@
+<div class="container">
+    <h2><b>PHONE ORDERING</b></h2>
+    <h3>Phone Detail</h3>
+    <div *ngIf="selectedOrder">
+        <!-- {{selectedOrder | json}} -->
+    </div>
+
+    <table class="table table-striped" id="excel-table">
+        <thead>
+            <tr>
+                <td>Delete</td>
+                <td>No.</td>
+                <td>Date</td>
+                <td>Province</td>
+                <td>Region</td>
+                <td>Store Name</td>
+                <td>Model</td>
+                <td>Amount</td>
+                <td>Color</td> 
+            </tr>
+            
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders | paginate: {itemsPerPage: orderPerPage,  currentPage: page} ; let i = index; ">
+                <td><button type="button" (click)="deleteOrder()"  class="btn btn-outline-danger">Delete</button></td>
+                <td id="_id">{{order._id}}</td>
+                <td>{{order.date | date: 'MM/dd/yyyy'}}</td>
+                <td>{{order.province}}</td>
+                <td>{{order.region}}</td>
+                <td>{{order.storeName}}</td>
+                <td>{{order.pModel}}</td>
+                <td>{{order.amountM}}</td>
+                <td *ngFor="let color of order.color">{{color.value}} = {{color.amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <mat-paginator [length]="orders.length"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+    </mat-paginator> -->
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <button type="button" class="btn btn-primary" (click)="exportexcel()">Export</button>
+    <button type="button" (click)="addOrder()" class="btn btn-primary">Add Order</button>
